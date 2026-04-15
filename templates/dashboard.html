@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    {% load static %} {% load pwa %}
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard - Hangarin</title>
+    {% include 'includes/pwa_head.html' %}
+    <style>
+      :root {
+        --bg-1: #1e0005;
+        --bg-2: #0f0002;
+        --text: #ffffff;
+        --sub: #ffe4e4;
+        --accent: #f87171;
+        --card: rgba(35, 0, 0, 0.7);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--text);
+        background: linear-gradient(135deg, #410000, #120000);
+      }
+      .topbar {
+        padding: 18px 26px;
+        background: linear-gradient(
+          90deg,
+          rgba(35, 0, 0, 0.95),
+          rgba(0, 0, 0, 0.92)
+        );
+        border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .topbar .brand-area {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .app-logo {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .brand {
+        font-size: clamp(1.1rem, 3vw, 1.6rem);
+        font-weight: 700;
+        color: #fff1f1;
+        text-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
+      }
+      .logout-btn {
+        color: #fff;
+        background: linear-gradient(90deg, #b91c1c, #f87171);
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        border-radius: 9px;
+        padding: 8px 14px;
+        text-decoration: none;
+        font-weight: 700;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        min-height: calc(100vh - 60px);
+      }
+      .sidebar {
+        background: rgba(20, 0, 0, 0.92);
+        border-right: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 20px;
+      }
+      .sidebar h3 {
+        margin-top: 0;
+        color: #ffd6d6;
+      }
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 10px 0 0;
+      }
+      .sidebar li {
+        margin: 11px 0;
+      }
+      .sidebar a {
+        color: #fff;
+        text-decoration: none;
+        display: block;
+        padding: 10px 12px;
+        border-radius: 8px;
+        transition: background 0.2s ease;
+      }
+      .sidebar a:hover {
+        background: rgba(255, 29, 29, 0.25);
+      }
+      .content {
+        padding: 24px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 18px;
+        margin-top: 14px;
+      }
+      .taskbar {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 14px;
+        padding: 14px;
+        margin-top: 14px;
+        backdrop-filter: blur(6px);
+      }
+      .taskbar h3 {
+        margin: 0 0 10px;
+        color: #ffe6e6;
+      }
+      .taskbar ul {
+        margin: 0;
+        padding-left: 18px;
+        color: #f4e5e5;
+      }
+      .taskbar li {
+        margin-bottom: 8px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid rgba(255, 0, 0, 0.2);
+        border-radius: 16px;
+        padding: 20px;
+        backdrop-filter: blur(5px);
+      }
+      .card h3 {
+        margin: 0 0 8px;
+        font-size: 1.05rem;
+        color: #ffd2d2;
+      }
+      .card p {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #fff;
+      }
+      .welcome {
+        margin-top: 14px;
+        font-size: 1rem;
+        color: #eee;
+      }
+      @media (max-width: 900px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        .sidebar {
+          border-right: none;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+          padding: 14px 16px;
+        }
+        .sidebar ul {
+          display: flex;
+          gap: 8px;
+          overflow-x: auto;
+          padding-bottom: 6px;
+          margin-bottom: 0;
+        }
+        .sidebar li {
+          margin: 0;
+          flex: 0 0 auto;
+        }
+        .sidebar a {
+          white-space: nowrap;
+          padding: 8px 10px;
+        }
+        .content {
+          padding: 16px;
+        }
+      }
+      @media (max-width: 640px) {
+        .topbar {
+          padding: 12px;
+        }
+        .topbar .brand-area {
+          gap: 8px;
+        }
+        .app-logo {
+          width: 36px;
+          height: 36px;
+        }
+        .logout-btn {
+          width: 100%;
+        }
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .card {
+          padding: 14px;
+        }
+        .card p {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+    {% progressive_web_app_meta %}
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand-area">
+        <img
+          class="app-logo"
+          src="{% static 'Logo.jpg' %}"
+          alt="Hangarin app logo"
+        />
+        <div class="brand">Hangarin App Dashboard</div>
+      </div>
+      <form method="post" action="{% url 'logout' %}" style="display: inline">
+        {% csrf_token %}
+        <button
+          type="submit"
+          class="logout-btn"
+          style="border: none; padding: 8px 14px; cursor: pointer"
+        >
+          Logout
+        </button>
+      </form>
+    </header>
+    <div class="layout">
+      <aside class="sidebar">
+        <h3>Navigation</h3>
+        <ul>
+          <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+          <li><a href="{% url 'tasks' %}">Tasks</a></li>
+          <li><a href="#">Bookings</a></li>
+          <li><a href="#">Messages</a></li>
+          <li><a href="#">Settings</a></li>
+        </ul>
+      </aside>
+      <main class="content">
+        <p class="welcome">
+          Hello, {{ user.username }}! Here is your dashboard summary at a
+          glance.
+        </p>
+        <section class="taskbar">
+          <h3>Taskbar</h3>
+          <ul>
+            <li>✔ Review new bookings</li>
+            <li>✏️ Update schedule</li>
+            <li>🔔 Check notifications</li>
+            <li>📊 Export metrics</li>
+          </ul>
+        </section>
+        <div class="grid">
+          <div class="card">
+            <h3>Pending</h3>
+            <p>{{ pending_count }}</p>
+          </div>
+          <div class="card">
+            <h3>In Progress</h3>
+            <p>{{ in_progress_count }}</p>
+          </div>
+          <div class="card">
+            <h3>Completed</h3>
+            <p>{{ completed_count }}</p>
+          </div>
+          <div class="card">
+            <h3>Total Tasks</h3>
+            <p>{{ total_tasks }}</p>
+          </div>
+        </div>
+        <div class="card" style="margin-top: 15px">
+          <h3>Latest Tasks</h3>
+          <ul style="margin-top: 10px; padding-left: 18px; color: #ffeceb">
+            {% for task in latest_tasks %}
+            <li style="margin-bottom: 8px">
+              {{ task.title }} — <strong>{{ task.status }}</strong>
+            </li>
+            {% empty %}
+            <li>
+              No tasks available. Run
+              <code>python manage.py populate_data</code>.
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

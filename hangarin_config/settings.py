@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-w#(u5=#)9*m_o7%hoev)k0k&5th#$ch1ev2&p0!nip@ejdmojr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.254.100', '.loca.lt']
 
 
 # Application definition
@@ -37,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tasks',
+    'pwa',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +57,7 @@ ROOT_URLCONF = 'hangarin_config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -115,8 +118,46 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = '/dashboard/'  # redirect logged-in users to the dashboard
+LOGIN_URL = 'login'       # name of your login URL
+CSRF_TRUSTED_ORIGINS = ['https://*.loca.lt']
+
+# --- Progressive Web App Settings --- 
+PWA_APP_NAME = 'ProjectSite' 
+PWA_APP_DESCRIPTION = "A Progressive Web App version of ProjectSite" 
+PWA_APP_THEME_COLOR = '#0A0A0A' 
+PWA_APP_BACKGROUND_COLOR = '#FFFFFF' 
+PWA_APP_DISPLAY = 'standalone' 
+PWA_APP_SCOPE = '/' 
+PWA_APP_ORIENTATION = 'portrait' 
+PWA_APP_START_URL = '/' 
+PWA_APP_STATUS_BAR_COLOR = 'default' 
+PWA_APP_ICONS = [ 
+ { 
+ 'src': '/static/img/icon-192.png', 
+ 'sizes': '192x192' 
+ }, 
+ { 
+ 'src': '/static/img/icon-512.png', 
+ 'sizes': '512x512' 
+ } 
+] 
+PWA_APP_ICONS_APPLE = [ 
+ { 
+ 'src': '/static/img/icon-192.png', 
+ 'sizes': '192x192' 
+ }, 
+ { 
+ 'src': '/static/img/icon-512.png', 
+ 'sizes': '512x512' 
+ } 
+] 
+PWA_APP_DIR = 'ltr' 
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static', 'serviceworker.js') 
