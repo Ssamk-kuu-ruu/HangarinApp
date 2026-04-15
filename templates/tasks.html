@@ -462,9 +462,15 @@
         />
         <div class="brand">Hangarin App Tasks</div>
       </div>
-      <form method="post" action="{% url 'logout' %}" style="display: inline;">
+      <form method="post" action="{% url 'logout' %}" style="display: inline">
         {% csrf_token %}
-        <button type="submit" class="logout-btn" style="border: none; padding: 8px 14px; cursor: pointer;">Logout</button>
+        <button
+          type="submit"
+          class="logout-btn"
+          style="border: none; padding: 8px 14px; cursor: pointer"
+        >
+          Logout
+        </button>
       </form>
     </header>
 
@@ -563,7 +569,13 @@
                     type="submit"
                     class="act-btn complete-btn"
                     title="Mark as Complete"
-                    {% if task.status == 'Completed' %}disabled{% endif %}
+                    {%
+                    if
+                    task.status=""
+                    ="Completed"
+                    %}disabled{%
+                    endif
+                    %}
                   >
                     ✓
                   </button>
@@ -583,19 +595,14 @@
         <div class="pagination">
           <div class="page-links">
             {% if page_obj.has_previous %}
-              <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
-            {% endif %}
-
-            {% for num in page_obj.paginator.page_range %}
-              {% if page_obj.number == num %}
-                <span class="active">{{ num }}</span>
-              {% else %}
-                <a href="?page={{ num }}">{{ num }}</a>
-              {% endif %}
-            {% endfor %}
-
-            {% if page_obj.has_next %}
-              <a href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+            <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+            {% endif %} {% for num in page_obj.paginator.page_range %} {% if
+            page_obj.number == num %}
+            <span class="active">{{ num }}</span>
+            {% else %}
+            <a href="?page={{ num }}">{{ num }}</a>
+            {% endif %} {% endfor %} {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">&raquo;</a>
             {% endif %}
           </div>
         </div>

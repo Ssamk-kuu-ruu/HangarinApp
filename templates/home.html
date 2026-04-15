@@ -8,8 +8,13 @@
     <style>
       body {
         margin: 0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: radial-gradient(circle at top left, #330000, #080808 60%, #000000 100%);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: radial-gradient(
+          circle at top left,
+          #330000,
+          #080808 60%,
+          #000000 100%
+        );
         color: #f8fafc;
         min-height: 100vh;
         display: grid;
@@ -42,7 +47,10 @@
         background: linear-gradient(90deg, #b91c1c, #991b1b);
         text-decoration: none;
         display: inline-block;
-        transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease,
+          background 0.25s ease;
       }
       .btn:hover {
         transform: translateY(-3px);
@@ -73,11 +81,11 @@
     <section class="hero">
       <h1>Welcome to Hangarin</h1>
       {% if user.is_authenticated %}
-        <p>Hello, {{ user.username }}!</p>
-        <a class="btn" href="{% url 'logout' %}">Logout</a>
+      <p>Hello, {{ user.username }}!</p>
+      <a class="btn" href="{% url 'logout' %}">Logout</a>
       {% else %}
-        <p class="meta">Please log in to continue to your dashboard.</p>
-        <a class="btn" href="{% url 'login' %}">Login</a>
+      <p class="meta">Please log in to continue to your dashboard.</p>
+      <a class="btn" href="{% url 'login' %}">Login</a>
       {% endif %}
     </section>
   </body>

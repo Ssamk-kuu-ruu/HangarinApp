@@ -1,8 +1,5 @@
 const CACHE_NAME = "hangarin-v2";
-const URLS_TO_CACHE = [
-  "/",
-  "/manifest.webmanifest",
-];
+const URLS_TO_CACHE = ["/", "/manifest.webmanifest"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -36,9 +33,7 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (event.request.mode === "navigate") {
-    event.respondWith(
-      fetch(event.request).catch(() => caches.match("/")),
-    );
+    event.respondWith(fetch(event.request).catch(() => caches.match("/")));
     return;
   }
 
