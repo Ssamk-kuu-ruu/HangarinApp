@@ -6,12 +6,14 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView
 from django.views.generic import DetailView, UpdateView, DeleteView
+from django.views.generic.base import RedirectView
 from django.views.decorators.http import require_POST
 from tasks.models import Category, Note, Priority, SubTask, Task
 from tasks.forms import ProfileForm, SignUpForm, TaskForm
 
-class HomeView(TemplateView):
-    template_name = 'home.html'
+class HomeView(RedirectView):
+    pattern_name = 'login'
+    permanent = False
 
 
 class SignUpView(CreateView):
