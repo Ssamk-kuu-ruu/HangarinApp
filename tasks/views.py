@@ -6,8 +6,8 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView
 from django.views.generic import DetailView, UpdateView, DeleteView
 from django.views.decorators.http import require_POST
-from tasks.models import Task
-from tasks.forms import TaskForm
+from tasks.models import Category, Note, Priority, SubTask, Task
+from tasks.forms import ProfileForm, TaskForm
 
 class HomeView(TemplateView):
     template_name = 'home.html'
@@ -38,6 +38,75 @@ class TaskListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Task.objects.select_related('category', 'priority').order_by(*self.ordering)
+
+
+class SubTaskListView(LoginRequiredMixin, ListView):
+    model = SubTask
+    template_name = 'subtasks.html'
+    context_object_name = 'subtasks'
+    paginate_by = 12
+
+    def get_queryset(self):
+        return SubTask.objects.select_related('parent_task').order_by('-created_at')
+
+
+class NoteListView(LoginRequiredMixin, ListView):
+    model = Note
+    template_name = 'notes.html'
+    context_object_name = 'notes'
+    paginate_by = 12
+
+    def get_queryset(self):
+        return Note.objects.select_related('task').order_by('-created_at')
+
+
+class PriorityListView(LoginRequiredMixin, ListView):
+    model = Priority
+    template_name = 'priorities.html'
+    context_object_name = 'priorities'
+
+    def get_queryset(self):
+        return Priority.objects.annotate(task_count=Count('task')).order_by('name')
+
+
+class CategoryListView(LoginRequiredMixin, ListView):
+    model = Category
+    template_name = 'categories.html'
+    context_object_name = 'categories'
+
+    def get_queryset(self):
+        return Category.objects.annotate(task_count=Count('task')).order_by('name')
+
+
+class ProfileView(LoginRequiredMixin, TemplateView):
+    template_name = 'profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profile_form'] = ProfileForm(instance=self.request.user)
+        return context
+
+
+class ProfileEditView(LoginRequiredMixin, UpdateView):
+    form_class = ProfileForm
+    template_name = 'profile_edit.html'
+    success_url = reverse_lazy('profile')
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+
+class SettingsView(LoginRequiredMixin, TemplateView):
+    template_name = 'settings.html'
+
+
+class SocialProfileView(LoginRequiredMixin, TemplateView):
+    template_name = 'social_profile.html'
+
+
+class BillingView(LoginRequiredMixin, TemplateView):
+    template_name = 'billing.html'
+
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
