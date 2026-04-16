@@ -1,5 +1,5 @@
-const CACHE_NAME = "hangarin-v2";
-const URLS_TO_CACHE = ["/", "/manifest.webmanifest"];
+const CACHE_NAME = "hangarin-v3";
+const URLS_TO_CACHE = ["/", "/manifest.webmanifest", "/static/Logo.jpg"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -66,7 +66,12 @@ self.addEventListener("fetch", (event) => {
           });
           return networkResponse;
         })
-        .catch(() => caches.match("/"));
+        .catch(() => {
+          if (event.request.destination === "image") {
+            return caches.match("/static/Logo.jpg");
+          }
+          return Response.error();
+        });
     }),
   );
 });
