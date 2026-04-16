@@ -1,6 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404, redirect
@@ -9,14 +8,14 @@ from django.views.generic import TemplateView, ListView, CreateView
 from django.views.generic import DetailView, UpdateView, DeleteView
 from django.views.decorators.http import require_POST
 from tasks.models import Category, Note, Priority, SubTask, Task
-from tasks.forms import ProfileForm, TaskForm
+from tasks.forms import ProfileForm, SignUpForm, TaskForm
 
 class HomeView(TemplateView):
     template_name = 'home.html'
 
 
 class SignUpView(CreateView):
-    form_class = UserCreationForm
+    form_class = SignUpForm
     template_name = 'signup.html'
     success_url = reverse_lazy('login')
 
