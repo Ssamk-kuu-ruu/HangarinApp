@@ -1,5 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -11,6 +13,17 @@ from tasks.forms import ProfileForm, TaskForm
 
 class HomeView(TemplateView):
     template_name = 'home.html'
+
+
+class SignUpView(CreateView):
+    form_class = UserCreationForm
+    template_name = 'signup.html'
+    success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Account created successfully. Please log in.')
+        return response
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'dashboard.html'

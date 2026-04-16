@@ -136,6 +136,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/dashboard/'  # redirect logged-in users to the dashboard
 LOGIN_URL = 'login'       # name of your login URL
 CSRF_TRUSTED_ORIGINS = ['https://*.loca.lt']
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # --- Progressive Web App Settings --- 
 PWA_APP_NAME = 'ProjectSite' 
