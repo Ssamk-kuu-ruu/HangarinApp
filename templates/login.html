@@ -22,7 +22,11 @@
         margin: 0;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         background:
-          radial-gradient(circle at top, rgba(248, 113, 113, 0.18), transparent 36%),
+          radial-gradient(
+            circle at top,
+            rgba(248, 113, 113, 0.18),
+            transparent 36%
+          ),
           linear-gradient(135deg, var(--bg-start), var(--bg-end));
         color: #fdfdfd;
         min-height: 100vh;
@@ -35,9 +39,21 @@
         position: fixed;
         inset: 0;
         background:
-          radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), transparent 22%),
-          radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.06), transparent 18%),
-          radial-gradient(circle at 50% 85%, rgba(248, 113, 113, 0.08), transparent 28%);
+          radial-gradient(
+            circle at 20% 20%,
+            rgba(255, 255, 255, 0.08),
+            transparent 22%
+          ),
+          radial-gradient(
+            circle at 80% 10%,
+            rgba(255, 255, 255, 0.06),
+            transparent 18%
+          ),
+          radial-gradient(
+            circle at 50% 85%,
+            rgba(248, 113, 113, 0.08),
+            transparent 28%
+          );
         pointer-events: none;
         animation: driftGlow 14s ease-in-out infinite alternate;
       }
@@ -51,7 +67,11 @@
         z-index: 1;
       }
       .card {
-        background: linear-gradient(160deg, rgba(41, 0, 0, 0.94), rgba(18, 0, 2, 0.92));
+        background: linear-gradient(
+          160deg,
+          rgba(41, 0, 0, 0.94),
+          rgba(18, 0, 2, 0.92)
+        );
         border: 1px solid var(--panel-border);
         border-radius: 26px;
         padding: 30px 26px 28px;
@@ -70,7 +90,11 @@
         inset: -30% auto auto -35%;
         width: 70%;
         height: 70%;
-        background: radial-gradient(circle, rgba(248, 113, 113, 0.14), transparent 70%);
+        background: radial-gradient(
+          circle,
+          rgba(248, 113, 113, 0.14),
+          transparent 70%
+        );
         pointer-events: none;
         animation: floatAura 8s ease-in-out infinite alternate;
       }
@@ -349,12 +373,11 @@
           {% csrf_token %} {{ form.as_p }}
           <button type="submit">Log In</button>
         </form>
-        {% if messages %}
-        {% for message in messages %}
-        <p class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</p>
-        {% endfor %}
-        {% endif %}
-        {% if form.errors %}
+        {% if messages %} {% for message in messages %}
+        <p class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+          {{ message }}
+        </p>
+        {% endfor %} {% endif %} {% if form.errors %}
         <p class="error">Invalid username or password.</p>
         {% endif %}
         <div class="auth-links">
